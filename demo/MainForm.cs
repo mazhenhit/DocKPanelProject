@@ -130,6 +130,13 @@ namespace demo
             return doc;
         }
 
+        private Doc CreateNewDocument(string text)
+        {
+            Doc doc = new Doc();
+            doc.Text = text;
+            return doc;
+        }
+
         private IDockContent FindDocument(string text)
         {
             if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
@@ -175,6 +182,55 @@ namespace demo
             MainForm newWindow = new MainForm();
             newWindow.Text = newWindow.Text + " - New";
             newWindow.Show();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+
+            openFile.InitialDirectory = Application.ExecutablePath;
+            openFile.Filter = "rtf files (*.rtf)|*.rtf|txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFile.FilterIndex = 1;
+            openFile.RestoreDirectory = true;
+
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                string fullName = openFile.FileName;
+                string fileName = Path.GetFileName(fullName);
+
+                if (FindDocument(fileName) != null)
+                {
+                    MessageBox.Show("The document: " + fileName + " has already opened!");
+                    return;
+                }
+
+                Doc doc = new Doc();
+                doc.Text = fileName;
+                doc.Show(dockPanel);
+                try
+                {
+                    doc.FileName = fullName;
+                }
+                catch (Exception exception)
+                {
+                    doc.Close();
+                    MessageBox.Show(exception.Message);
+                }
+
+            }
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem == toolStripButtonNew)
+                newToolStripMenuItem_Click(null, null);
+            else if (e.ClickedItem == toolStripButtonOpen)
+                openToolStripMenuItem_Click(null, null);
+        }
+
+        private void toolsBoxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_ToolsBox.Show(dockPanel);
         }
     }
 }

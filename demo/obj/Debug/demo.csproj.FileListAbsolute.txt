@@ -13,7 +13,6 @@ G:\VisualStudioCpp\demo\demo\bin\Debug\demo.exe.config
 G:\VisualStudioCpp\demo\demo\bin\Debug\demo.exe
 G:\VisualStudioCpp\demo\demo\bin\Debug\demo.pdb
 G:\VisualStudioCpp\demo\demo\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll
-G:\VisualStudioCpp\demo\demo\obj\Debug\demo.csprojResolveAssemblyReference.cache
 G:\VisualStudioCpp\demo\demo\obj\Debug\demo.AboutSoftware.resources
 G:\VisualStudioCpp\demo\demo\obj\Debug\demo.Doc.resources
 G:\VisualStudioCpp\demo\demo\obj\Debug\demo.MainForm.resources

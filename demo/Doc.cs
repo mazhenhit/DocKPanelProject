@@ -32,10 +32,10 @@ namespace demo
 
                     string fext = efInfo.Extension.ToUpper();
 
-                    //if (fext.Equals(".RTF"))
-                    //    richTextBox1.LoadFile(s, RichTextBoxStreamType.RichText);
-                    //else
-                    //    richTextBox1.LoadFile(s, RichTextBoxStreamType.PlainText);
+                    if (fext.Equals(".RTF"))
+                        richTextBox1.LoadFile(s, RichTextBoxStreamType.RichText);
+                    else
+                        richTextBox1.LoadFile(s, RichTextBoxStreamType.PlainText);
                     s.Close();
                 }
 
@@ -43,7 +43,32 @@ namespace demo
                 this.ToolTipText = value;
             }
         }
+        // workaround of RichTextbox control's bug:
+        // If load file before the control showed, all the text format will be lost
+        // re-load the file after it get showed.
+        private bool m_resetText = true;
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            if (m_resetText)
+            {
+                m_resetText = false;
+                FileName = FileName;
+            }
+        }
+
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            if (FileName == string.Empty)
+                this.richTextBox1.Text = Text;
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            testToolStripMenuItem.Checked = !testToolStripMenuItem.Checked;
+        }
     }
 
-    
 }
